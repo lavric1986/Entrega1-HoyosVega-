@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle Opeario</title>
+</head>
+<body>
+    <p><b>Nombre: </b> {{ operario.nombre }} </p>
+    <p><b>Apellido: </b> {{ operario.apellido }} </p>
+    <p><b>Email: </b> {{ operario.email }} </p>
+    <p><b>Profesion: </b> {{ operario.profesion }} </p>
+
+    <a href="{% url 'operarios_list' %}">Volver a lista de personal operativo...</a>
+</body>
+</html>
