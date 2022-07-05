@@ -17,6 +17,9 @@ Maquinaria - App Coder
                     <input class="flex-grow-0 form-control mr-sm-2" type="search" name="search" placeholder="Buscar por marca/funcion" aria-label="Search">
                     <button class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" type="submit"> <i class="bi bi-search"></i> Buscar</button>
                     <a class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" href="{% url 'crear_maquina' %}"> <i class="bi bi-plus-lg"></i> Crear maquina</a>
+                    {% comment %} <commit>
+                        
+                    <commit> {% endcomment %}
                 </form>
             </div>
         </div>
@@ -48,9 +51,13 @@ Maquinaria - App Coder
                                 <td>{{maquinaria.marca}}</td>
                                 <td>{{maquinaria.funcion}}</td>
                                 <td>
-                                    <a href="{% url 'editar_maquina' curso.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
-                                    <a href="{% url 'eliminar_maquina' curso.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
+                                    <a href="{% url 'editar_maquina' maquina.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
+                                    <a href="{% url 'eliminar_maquina' maquina.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
                                 </td>
+                                {% comment %} <comment>
+                                    {% url 'editar_maquina' maquinaria.id %}
+                                    {% url 'eliminar_maquina' maquinaria.id %}
+                                    <endcomment> {% endcomment %}
                             </tr>
                         {% endfor %}
                     </tbody>

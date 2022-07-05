@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.http import HttpResponse
 
 from .models import Maquinaria, Herramientas, Operario
-from .forms import HerramientaFormulario, NuevaMaquina
+from .forms import HerramientaFormulario, NuevaMaquina, NuevoOperario
 from django.db.models import Q
 
 from django.views.generic import ListView
@@ -22,25 +22,6 @@ def inicio(request):
 
     return render(request,"ProyectoCoderApp/index.html",{"mi_nombre":nombre,"dia_hora":hoy,"notas":notas})
 
-"""
-def buscar_comision(request):
-
-    if request.method == "POST":
-
-        comision = request.POST["comision"]
-        
-        comisiones = Curso.objects.filter( Q(nombre__icontains=comision) | Q(comision__icontains=comision) ).values()
-        # User.objects.filter(Q(income__gte=5000) | Q(income__isnull=True))
-
-        return render(request,"ProyectoCoderApp/buscar_comision.html",{"comisiones":comisiones})
-
-    else: # get y otros
-
-        comisiones =  []  #Curso.objects.all()
-        
-        return render(request,"ProyectoCoderApp/buscar_comision.html",{"comisiones":comisiones})
-"""
-
 def herramientas(request):
 
     if request.method == "POST":
@@ -48,7 +29,7 @@ def herramientas(request):
         search = request.POST["search"]
 
         if search != "":
-            herramientas = Herramientas.objects.filter( Q(tipo__icontains=search) | Q(marca__icontains=search)|Q(codigo_icontains=search) ).values()
+            herramientas = Herramientas.objects.filter( Q(tipo__icontains=search) | Q(marca__icontains=search)).values()
 
             return render(request,"ProyectoCoderApp/herramientas.html",{"herramientas":herramientas, "search":True, "busqueda":search})
 
@@ -78,16 +59,16 @@ def crear_herramienta(request):
     formulario = HerramientaFormulario()
     return render(request,"ProyectoCoderApp/formulario_herramienta.html",{"form":formulario})
 
-def eliminar_herramienta(request,herramienta_id):
+def eliminar_herramienta(request,herramientas_id):
 
-    herramienta = Herramientas.objects.get(id = herramienta_id)
-    herramienta.delete()
+    herramientas = Herramientas.objects.get(id = herramientas_id)
+    herramientas.delete()
 
     return redirect("herramientas")
 
-def editar_herramientas(request,herramienta_id):
+def editar_herramientas(request,herramientas_id):
 
-    herramienta = Herramientas.objects.get(id = herramienta_id)
+    herramientas = Herramientas.objects.get(id = herramientas_id)
 
     if request.method == "POST":
 
@@ -97,15 +78,15 @@ def editar_herramientas(request,herramienta_id):
             
             info_herramienta = formulario.cleaned_data
             
-            herramienta.tipo = info_herramienta["tipo"]
-            herramienta.marca = info_herramienta["marca"]
-            herramienta.codigo = info_herramienta["codigo"]
-            herramienta.save()
+            herramientas.tipo = info_herramienta["tipo"]
+            herramientas.marca = info_herramienta["marca"]
+            herramientas.codigo = info_herramienta["codigo"]
+            herramientas.save()
 
             return redirect("herramientas")
 
     # get
-    formulario = HerramientaFormulario(initial={"tipo":herramienta.tipo, "marca":herramienta.marca, "codigo": herramienta.codigo})
+    formulario = HerramientaFormulario(initial={"tipo":herramientas.tipo, "marca":herramientas.marca, "codigo": herramientas.codigo})
     
     return render(request,"ProyectoCoderApp/formulario_herramienta.html",{"form":formulario})
 
@@ -144,13 +125,13 @@ def maquinas(request):
         search = request.POST["search"]
 
         if search != "":
-            maquinaria = Maquinaria.objects.filter( Q(marca__icontains=search) | Q(funcion__icontains=search) ).values()
+            maquinas = Maquinaria.objects.filter( Q(marca__icontains=search) | Q(funcion__icontains=search) ).values()
 
-            return render(request,"ProyectoCoderApp/maquinaria.html",{"maquinaria": maquinaria , "search":True, "busqueda":search})
+            return render(request,"ProyectoCoderApp/maquinaria.html",{"maquinas": maquinas , "search":True, "busqueda":search})
 
-    maquinaria = Maquinaria.objects.all()
+    maquinas = Maquinaria.objects.all()
 
-    return render(request,"ProyectoCoderApp/maquinaria.html",{"maquinaria":maquinaria, "search":False})
+    return render(request,"ProyectoCoderApp/maquinaria.html",{"maquinas":maquinas, "search":False})
 
 def crear_maquina(request):
 
@@ -163,35 +144,33 @@ def crear_maquina(request):
 
             info_maquinaria = formulario.cleaned_data
         
-            maquinaria = Maquinaria(marca=info_maquinaria["marca"], funcion=info_maquinaria["funcion"])
-            maquinaria.save() # guardamos en la bd
+            maquinas = Maquinaria(marca=info_maquinaria["marca"], funcion=info_maquinaria["funcion"])
+            maquinas.save() # guardamos en la bd
             
-            return redirect("maquinaria")
+            return redirect("maquinas")
 
-        else:
-
-            return render(request,"ProyectoCoderApp/formulario_curso.html",{"form":formulario,"accion":"Crear Curso"})
+        return render(request,"ProyectoCoderApp/formulario_maquinaria.html",{"form":formulario,"accion":"crear maquina"})
     
 
-    else: # get y otros
+    # get y otros
 
-        formularioVacio = NuevaMaquina()
+    formularioVacio = NuevaMaquina()
 
-        return render(request,"ProyectoCoderApp/formulario_maquinaria.html",{"form":formularioVacio,"accion":"Crear Maquina"})
+    return render(request,"ProyectoCoderApp/formulario_maquinaria.html",{"form":formularioVacio,"accion":"crear Maquina"})
 
-def eliminar_maquina(request, maquinaria_id):
+def eliminar_maquina(request, maquina_id):
 
     # post
-    maquinaria = Maquinaria.objects.get(id=maquinaria_id)
-    maquinaria.delete()
+    maquinas = Maquinaria.objects.get(id = maquina_id)
+    maquinas.delete()
 
-    return redirect("maquinaria")
+    return redirect("maquinas")
 
-def editar_maquina(request, maquinaria_id):
+def editar_maquina(request, maquina_id):
 
     # post
     
-    maquinaria = Maquinaria.objects.get(id=maquinaria_id)
+    maquinas = Maquinaria.objects.get(id = maquina_id)
 
     if request.method == "POST":
 
@@ -201,52 +180,111 @@ def editar_maquina(request, maquinaria_id):
 
             info_maquinaria = formulario.cleaned_data
         
-            maquinaria.marca = info_maquinaria["marca"]
-            maquinaria.funcion = info_maquinaria["funcion"]
-            maquinaria.save() # guardamos en la bd
+            maquinas.marca = info_maquinaria["marca"]
+            maquinas.funcion = info_maquinaria["funcion"]
+            maquinas.save() # guardamos en la bd
             
-            return redirect("maquinaria")
+            return redirect("maquinas")
 
             
-    formulario = NuevaMaquina(initial={"marca":maquinaria.marca,"funcion":maquinaria.funcion})
+    formulario = NuevaMaquina(initial={"marca":maquinas.marca,"funcion":maquinas.funcion})
 
     return render(request,"ProyectoCoderApp/formulario_maquinaria.html",{"form":formulario,"accion":"Editar Maquina"})
 
 
 def operarios(request):
+     if request.method == "POST":
 
-    operarios = Operario.objects.all()
+        search = request.POST["search"]
 
-    return render(request,"ProyectoCoderApp/operarios.html",{"operarios":operarios})
+        if search != "":
+            operarios = Operario.objects.filter( Q(nombre__icontains=search) | Q(apellido__icontains=search) ).values()
 
-class OperarioList(ListView):
+            return render(request,"ProyectoCoderApp/operarios.html",{"operarios": operarios , "search":True, "busqueda":search})
 
-    model = Operario
-    template_name = "ProyectoCoderApp/operarios_list.html"
+     operarios = Operario.objects.all()
+
+     return render(request,"ProyectoCoderApp/operarios.html",{"operarios":operarios, "search":False})
+
+def crear_operarios(request):
+     if request.method == "POST":
+        
+        formulario = NuevoOperario(request.POST)
+
+        if formulario.is_valid():
+            
+            info = formulario.cleaned_data
+
+            operario = Operario(nombre=info["nombre"],apellido=info["apellido"],area=info["area"])
+            operario.save()
+
+            return redirect("operarios")
+
+        return render(request,"ProyectoCoderApp/operarios_formulario.html",{"form":formulario})
+
+    # get
+     formulario = NuevoOperario()
+     return render(request,"ProyectoCoderApp/operarios_formulario.html",{"form":formulario})
+
+def eliminar_operarios(request,operario_id):
+    operario = Operario.objects.get(id=operario_id )
+    operario.delete()
+
+    return redirect("operarios")
+
+def editar_operarios(request,operario_id):
+    operario = Operario.objects.get(id = operario_id)
+
+    if request.method == "POST":
+
+        formulario = NuevoOperario(request.POST)
+
+        if formulario.is_valid():
+            
+            info_operarios = formulario.cleaned_data
+            
+            operario.tipo = info_operarios["nombre"]
+            operario.marca = info_operarios["apellido"]
+            operario.codigo = info_operarios["area"]
+            operario.save()
+
+            return redirect("operarios")
+
+    # get
+    formulario = NuevoOperario(initial={"nombre":operario.nombre, "apellido":operario.apellido, "area": operario.area})
+    
+    return render(request,"ProyectoCoderApp/operarios_formulario.html",{"form":formulario})
+
+    # return render(request,"ProyectoCoderApp/operarios.html",{"operarios":operarios})
+
+# class OperarioList(ListView):
+
+#     model = Operario
+#     template_name = "ProyectoCoderApp/operarios_list.html"
 
 
-class OperarioDetail(DetailView):
+# class OperarioDetail(DetailView):
 
-    model = Operario
-    template_name = "ProyectoCoderApp/operarios_detail.html"
+#     model = Operario
+#     template_name = "ProyectoCoderApp/operarios_detail.html"
 
 
-class OperarioCreate(CreateView):
+# class OperarioCreate(CreateView):
 
-    model = Operario
-    success_url = "/coderapp/list"#reverse_lazy("profes_list")
-    fields = ["nombre", "apellido", "email", "profesion"]
+#     model = Operario
+#     success_url = "/coderapp/list"#reverse_lazy("operarios_list")
+#     fields = ["nombre", "apellido", "area"]
 
-class OperarioUpdate(UpdateView):
+# class OperarioUpdate(UpdateView):
 
-    model = Operario
-    success_url = "/coderapp/list"#reverse_lazy("profes_list")
-    fields = ["nombre", "apellido", "email", "profesion"]
+#     model = Operario
+#     success_url = "/coderapp/list"#reverse_lazy("operarios_list")
+#     fields = ["nombre", "apellido", "area"]
 
-class OperarioDelete(DeleteView):
+# class OperarioDelete(DeleteView):
 
-    model = Operario
-    success_url = "/coderapp/list"#reverse_lazy("profes_list")
+#     model = Operario
+#     success_url = "/coderapp/list"#reverse_lazy("operarios_list")
 
 def base(request):
     return render(request,"ProyectoCoderApp/base.html",{})

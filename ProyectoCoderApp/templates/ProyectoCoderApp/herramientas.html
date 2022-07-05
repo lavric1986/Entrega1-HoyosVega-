@@ -16,9 +16,10 @@ Herramientas
                     {% csrf_token %}
                     <input class="flex-grow-0 form-control mr-sm-2" type="search" name="search" placeholder="Buscar por tipo/marca" aria-label="Search">
                     <button class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" type="submit"> <i class="bi bi-search"></i> Buscar</button>
-                    <a class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" href="{% url 'crear_herramienta' %}"> <i class="bi bi-plus-lg"></i> Ingresar Nuevo Producto</a>
+                    <a class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" href="{% url 'crear_herramientas' %}"> <i class="bi bi-plus-lg"></i> Ingresar nueva herramienta</a>
                     {% comment %}
                         {% url 'crear_estudiante' %}
+                        
                     {% endcomment %}
                 </form>
             </div>
@@ -40,6 +41,7 @@ Herramientas
                             <th scope="col">#</th>
                             <th scope="col">Tipo</th>
                             <th scope="col">Marca</th>
+                            <th scope="col">Codigo</th>
                             <!-- <th scope="col">Email</th> -->
                             <th scope="col">Acciones</th>
                         </tr>
@@ -49,15 +51,17 @@ Herramientas
                         {% for herramienta in herramientas %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
-                                <td>{{herramientas.tipo}}</td>
-                                <td>{{herramientas.marca}}</td>
+                                <td>{{herramienta.tipo}}</td>
+                                <td>{{herramienta.marca}}</td>
+                                <td>{{herramienta.codigo}}</td>
                                 <!-- <td>{{estudiante.email}}</td> -->
                                 <td>
-                                    <a href="{% url 'editar_herramienta' herramienta.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
-                                    <a href="{% url 'eliminar_herramienta' herramienta.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
+                                    <a href="{% url 'editar_herramientas' herramienta.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
+                                    <a href="{% url 'eliminar_herramientas' herramienta.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
                                     {% comment %}
-                                        {% url 'editar_estudiante' estudiante.id %}
-                                        {% url 'eliminar_estudiante' estudiante.id %}
+                                        
+                                        
+                                        
                                     {% endcomment %}
                                 </td>
                             </tr>

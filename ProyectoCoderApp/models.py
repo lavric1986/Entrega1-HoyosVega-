@@ -6,28 +6,27 @@ class Maquinaria(models.Model):
 
     # id por defecto
     marca = models.CharField(max_length=30) # Texto
-    funcion = models.CharField(max_length=100)
+    funcion = models.CharField(max_length=30)
 
 class Herramientas(models.Model):
 
     # id por defecto
+    codigo = models.IntegerField() 
     tipo = models.CharField(max_length=30) # Texto
     marca = models.CharField(max_length=30) # Texto
-    codigo = models.IntegerField() 
+    
 
 class Operario(models.Model):
 
     # id por defecto
     nombre = models.CharField(max_length=30) # Texto
     apellido = models.CharField(max_length=30) # Texto
-    email = models.EmailField(blank=True, null=True) # Email - Opcional
-
-    profesion = models.CharField(max_length=30)
+    area = models.CharField(max_length=30)
 
     # dni = models.IntegerField()
 
     class Meta:
-        verbose_name_plural = "Profesores"
+        verbose_name_plural = "Operarios"
 
 class Entregable(models.Model):
 

@@ -17,8 +17,8 @@ class HerramientaAdmin(admin.ModelAdmin):
 
 class OperarioAdmin(admin.ModelAdmin):
 
-    list_display = ('nombre', 'apellido', 'profesion')
-    readonly_fields = ('profesion',)
+    list_display = ('nombre', 'apellido', 'area')
+    
 
 
 # class EntregableAdmin(admin.ModelAdmin):

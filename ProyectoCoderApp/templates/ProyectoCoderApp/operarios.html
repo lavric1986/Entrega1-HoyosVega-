@@ -16,8 +16,11 @@ Operarios - App Coder
                     {% csrf_token %}
                     <input class="flex-grow-0 form-control mr-sm-2" type="search" name="search" placeholder="Buscar por nombre/apellido" aria-label="Search">
                     <button class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" type="submit"> <i class="bi bi-search"></i> Buscar</button>
-                    <a class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" href="{% url 'operario_create' %}"> <i class="bi bi-plus-lg"></i> Crear Operario</a>
+                    <a class="btn btn-outline-success text-nowrap ms-3 my-2 my-sm-0" href="{% url 'crear_operarios' %}"> <i class="bi bi-plus-lg"></i> Crear Operario</a>
                 </form>
+                {% comment %} <comment>
+                  "{% url 'crear_operarios' %}"
+                    <endcomment> {% endcomment %}
             </div>
         </div>
         <br>
@@ -37,23 +40,27 @@ Operarios - App Coder
                             <th scope="col">#</th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Apellido</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Profesion</th>
+                            <th scope="col">Area</th>
                             <th scope="col">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         
-                        {% for operario in operario %}
+                        {% for operario in operarios %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
-                                <td>{{operario.nombre}}</td>
-                                <td>{{operario.apellido}}</td>
-                                <td>{{operario.email}}</td>
-                                <td>{{operario.profesion}}</td>
+                                <td>{{operarios.nombre}}</td>
+                                <td>{{operarios.apellido}}</td>
+                                <td>{{operarios.area}}</td>
                                 <td>
-                                    <a href="{% url 'operario_update' operario.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
-                                    <a href="{% url 'operario_delete' operario.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
+                                    <a href="{% url 'editar_operarios' operario.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
+                                    <a href="{% url 'eliminar_operarios' operario.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
+                                    {% comment %} <comment>
+                                        {% url 'operario_update' operario.id %}
+                                        "{% url 'eliminar_operarios' operarios.id %}"
+                                        
+
+                                        <endcomment> {% endcomment %}
                                 </td>
                             </tr>
                         {% endfor %}
