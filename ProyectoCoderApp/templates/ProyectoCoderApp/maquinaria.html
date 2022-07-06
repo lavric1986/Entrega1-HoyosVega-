@@ -48,15 +48,14 @@ Maquinaria - App Coder
                         {% for maquina in maquinas %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
-                                <td>{{maquinaria.marca}}</td>
-                                <td>{{maquinaria.funcion}}</td>
+                                <td>{{maquina.marca}}</td>
+                                <td>{{maquina.funcion}}</td>
                                 <td>
                                     <a href="{% url 'editar_maquina' maquina.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
                                     <a href="{% url 'eliminar_maquina' maquina.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
                                 </td>
                                 {% comment %} <comment>
-                                    {% url 'editar_maquina' maquinaria.id %}
-                                    {% url 'eliminar_maquina' maquinaria.id %}
+                                    
                                     <endcomment> {% endcomment %}
                             </tr>
                         {% endfor %}

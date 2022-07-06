@@ -49,9 +49,9 @@ Operarios - App Coder
                         {% for operario in operarios %}
                             <tr>
                                 <th scope="row">{{forloop.counter}}</th>
-                                <td>{{operarios.nombre}}</td>
-                                <td>{{operarios.apellido}}</td>
-                                <td>{{operarios.area}}</td>
+                                <td>{{operario.nombre}}</td>
+                                <td>{{operario.apellido}}</td>
+                                <td>{{operario.area}}</td>
                                 <td>
                                     <a href="{% url 'editar_operarios' operario.id %}" class="text-primary badge badge-primary text-decoration-none"> <i class="bi bi-pencil-square"></i> Editar</a>
                                     <a href="{% url 'eliminar_operarios' operario.id %}" class="text-danger badge badge-danger text-decoration-none"> <i class="bi bi-x-square"></i> Eliminar</a>
