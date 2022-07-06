@@ -1,0 +1,15 @@
+{% extends 'ProyectoCoderApp/base.html' %}
+{% load static %}
+
+{% block tituloPagina %}
+ Register - Alamacen 
+{% endblock %}
+   
+{% block contenidoPagina %}
+<h class="display-5 fw-bolder text-green mb-2">Registro</h>
+<form action = "" method ="post">
+   {% csrf_token %}
+   {{form.as_p}}
+<button type="submit">Registrate</button>
+</form>
+{% endblock %}

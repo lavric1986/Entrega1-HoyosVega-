@@ -1,0 +1,15 @@
+{% extends 'ProyectoCoderApp/base.html' %}
+{% load static %}
+
+{% block tituloPagina %}
+ Login - Alamacen 
+{% endblock %}
+   
+{% block contenidoPagina %}
+<h class="display-5 fw-bolder text-green mb-2">Iniciar Sesion</h>
+<form action = "" method ="post">
+   {% csrf_token %}
+   {{form.as_p}}
+<button type="submit">Iniciar Sesion</button>
+</form>
+{% endblock %}
