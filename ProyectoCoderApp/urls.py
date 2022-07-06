@@ -31,11 +31,11 @@ urlpatterns = [
     
     
     
-    # path(r'list', OperarioList.as_view(), name="operarios_list"),
-    # path(r'^(?P<pk>\d+)$', OperarioDetail.as_view(), name="operarios_detail"),
-    # path(r'^nuevo$', OperarioCreate.as_view(), name="operario_create"),
-    # path(r'^editar/(?P<pk>\d+)$', OperarioUpdate.as_view(), name="operario_update"),
-    # path(r'^eliminar/(?P<pk>\d+)$', OperarioDelete.as_view(), name="operario_delete"),
+    path('operarios/list', OperarioList.as_view(), name="operarios_list"),
+    path('operarios/<pk>', OperarioDetail.as_view(), name="operarios_detail"),
+    path('operarios/nuevo', OperarioCreate.as_view(), name="operario_create"),
+    path('operarios/editar/<pk>', OperarioUpdate.as_view(), name="operario_update"),
+    path('operarios/eliminar/<pk>', OperarioDelete.as_view(), name="operario_delete"),
 
     path('maquinas/', maquinas, name= "maquinas"),
     path('crear_maquina/', crear_maquina, name="crear_maquina"),

@@ -14,6 +14,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.forms import AuthenticationForm #, UserCreationForm
 from .forms import *
 from django.contrib.auth import login, logout, authenticate 
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 def inicio(request):
@@ -241,7 +243,7 @@ def editar_maquina(request, maquina_id):
 
     return render(request,"ProyectoCoderApp/formulario_maquinaria.html",{"form":formulario,"accion":"Editar Maquina"})
 
-
+@login_required
 def operarios(request):
      if request.method == "POST":
 
@@ -307,34 +309,34 @@ def editar_operarios(request,operario_id):
 
     # return render(request,"ProyectoCoderApp/operarios.html",{"operarios":operarios})
 
-# class OperarioList(ListView):
+class OperarioList(LoginRequiredMixin,ListView):
 
-#     model = Operario
-#     template_name = "ProyectoCoderApp/operarios_list.html"
-
-
-# class OperarioDetail(DetailView):
-
-#     model = Operario
-#     template_name = "ProyectoCoderApp/operarios_detail.html"
+    model = Operario
+    template_name = "ProyectoCoderApp/operarios_list.html"
 
 
-# class OperarioCreate(CreateView):
+class OperarioDetail(DetailView):
 
-#     model = Operario
-#     success_url = "/coderapp/list"#reverse_lazy("operarios_list")
-#     fields = ["nombre", "apellido", "area"]
+    model = Operario
+    template_name = "ProyectoCoderApp/operarios_detail.html"
 
-# class OperarioUpdate(UpdateView):
 
-#     model = Operario
-#     success_url = "/coderapp/list"#reverse_lazy("operarios_list")
-#     fields = ["nombre", "apellido", "area"]
+class OperarioCreate(CreateView):
 
-# class OperarioDelete(DeleteView):
+    model = Operario
+    success_url = "/coderapp/list"#reverse_lazy("operarios_list")
+    fields = ["nombre", "apellido", "area"]
 
-#     model = Operario
-#     success_url = "/coderapp/list"#reverse_lazy("operarios_list")
+class OperarioUpdate(UpdateView):
+
+    model = Operario
+    success_url = "/coderapp/list"#reverse_lazy("operarios_list")
+    fields = ["nombre", "apellido", "area"]
+
+class OperarioDelete(DeleteView):
+
+    model = Operario
+    success_url = "/coderapp/list"#reverse_lazy("operarios_list")
 
 def base(request):
     return render(request,"ProyectoCoderApp/base.html",{})

@@ -13,9 +13,9 @@
             <li>
                 <p>Profe: {{ operario.nombre }} {{ operario.apellido }}</p>
                 <p>
-                    <a href="{% url 'operarios_detail' operarios.id %}">Ver</a>
-                    <a href="{% url 'operarios_update' operarios.id %}">Editar</a>
-                    <a href="{% url 'operarios_delete' operarios.id %}">Eliminar</a>
+                    <a href="{% url 'operarios_detail' operario.id %}">Ver</a>
+                    <a href="{% url 'operario_update' operario.id %}">Editar</a>
+                    <a href="{% url 'operario_delete' operario.id %}">Eliminar</a>
                 </p>
             </li>
         {% endfor %}
