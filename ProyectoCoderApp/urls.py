@@ -5,6 +5,7 @@ from .views import *
 urlpatterns = [
     # URLS de ProyectoCoderApp
     path('', inicio, name="inicio"),
+    path('login/', login_request, name="login"),#no usar login como nombre de la vista
 
     path('herramientas/', herramientas , name= "herramientas"),
     path('crear_herramientas/', crear_herramienta, name="crear_herramientas"),
