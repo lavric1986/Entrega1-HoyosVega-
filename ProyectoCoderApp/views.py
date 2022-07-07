@@ -13,9 +13,10 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 # from django.urls import reverse_lazy
 from django.contrib.auth.forms import AuthenticationForm #, UserCreationForm
 from .forms import *
-from django.contrib.auth import login, logout, authenticate 
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.admin.views.decorators import staff_member_required
 # Create your views here.
 
 def inicio(request):
@@ -74,6 +75,7 @@ def logout_request(request):
     logout(request)
     return redirect('inicio')
 
+@staff_member_required
 def herramientas(request):
 
     if request.method == "POST":
@@ -169,7 +171,7 @@ class HerramientasDelete(DeleteView):
     model = Herramientas
     success_url = "/coderapp/herramientas/list" # atenciooooooooon!!!! a la primer /
 
-
+@login_required
 def maquinas(request):
 
     if request.method == "POST":
