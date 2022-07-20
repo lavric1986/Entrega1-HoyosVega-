@@ -3,7 +3,7 @@ import datetime
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 
-from .models import Maquinaria, Herramientas, Operario
+from .models import Avatar, Maquinaria, Herramientas, Operario
 from .forms import HerramientaFormulario, NuevaMaquina, NuevoOperario
 from django.db.models import Q
 
@@ -25,8 +25,17 @@ def inicio(request):
     nombre = "Juan"
     hoy = datetime.datetime.now()
     notas = [4,9,7,8,5,10]
+    
+    if request.user.is_authenticated:
+        try:
+            avatar=Avatar.objects.get(usuario=request.user)
+            url = avatar.imagen.url
+        except:
+            url="/media/avatar/Profile.png"
+        return render(request,"ProyectoCoderApp/index.html",{"mi_nombre":nombre,"dia_hora":hoy,"notas":notas,"url":url})
 
-    return render(request,"ProyectoCoderApp/index.html",{"mi_nombre":nombre,"dia_hora":hoy,"notas":notas})
+    return render(request,"ProyectoCoderApp/index.html",{"mi_nombre":nombre,"dia_hora":hoy,"notas":notas,})
+    
 
 
 def login_request(request):
@@ -55,8 +64,10 @@ def register_request(request):
          #form= UserCreationForm(request.POST)
          
          if form.is_valid():
+             
              username =form.cleaned_data.get('username')
              password =form.cleaned_data.get('password1')# es la primer contraseña no la confirmacion 
+            
              
              form.save()#registramos el usuario
              user= authenticate(username=username,password=password)
@@ -75,7 +86,48 @@ def logout_request(request):
     logout(request)
     return redirect('inicio')
 
-@staff_member_required
+@login_required
+def editar_perfil(request):
+    
+    user=request.user #usuario con el que estoy logeado
+    
+    if request.method == "POST":
+        form = UserEditForm(request.POST)
+        
+        if form.is_valid():
+            info =form.cleaned_data
+            user.email = info["email"]
+            user.first_name = info["first_name"]
+            user.last_name = info["last_name"]
+            
+            user.save()
+            
+            return redirect("inicio")
+    
+    else:
+        form =UserEditForm(initial={"email":user.email,"first_name":user.first_name,"last_name":user.last_name})
+    return render(request,"ProyectoCoderApp/editar_perfil.html",{"form":form})
+@login_required
+def agregar_avatar(request):
+    if request.method == 'POST':
+        form =AvatarForm(request.POST, request.FILES)
+        if form.is_valid():
+            user=User.objects.get(username=request.user.username)
+            
+            avatar = Avatar (usuario=user, imagen=form.cleaned_data['imagen'])
+            avatar.save()
+            
+            # return render(request, "ProyectoCoderApp/index.html")
+            return redirect('inicio')
+    else:
+        form=AvatarForm()
+    
+    return render(request,"ProyectoCoderApp/agregar_avatar.html",{"form":form})
+
+    
+    
+    
+
 def herramientas(request):
 
     if request.method == "POST":
@@ -91,6 +143,7 @@ def herramientas(request):
 
     return render(request,"ProyectoCoderApp/herramientas.html",{"herramientas":herramientas})
 
+@staff_member_required
 def crear_herramienta(request):
     
     # post
@@ -113,6 +166,7 @@ def crear_herramienta(request):
     formulario = HerramientaFormulario()
     return render(request,"ProyectoCoderApp/formulario_herramienta.html",{"form":formulario})
 
+@staff_member_required
 def eliminar_herramienta(request,herramientas_id):
 
     herramientas = Herramientas.objects.get(id = herramientas_id)
@@ -120,6 +174,7 @@ def eliminar_herramienta(request,herramientas_id):
 
     return redirect("herramientas")
 
+@staff_member_required
 def editar_herramientas(request,herramientas_id):
 
     herramientas = Herramientas.objects.get(id = herramientas_id)

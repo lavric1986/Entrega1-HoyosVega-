@@ -1,0 +1,19 @@
+{% extends 'ProyectoCoderApp/base.html' %}
+{% load static %}
+ 
+
+{% block tituloPagina %}
+Cambio contraseña 
+{% endblock %}
+   
+{% block contenidoPagina %}
+<h class="display-5 fw-bolder text-green mb-2">Cambio de contraseña</h>
+<br>
+<h5>Estamos cambiando la contraseña"{{user.username}}":</h5>
+<br>
+<form action = "" method ="post">
+   {% csrf_token %}
+   {{form.as_p}}
+<button type="submit">Guardar cambios</button>
+</form>
+{% endblock %}

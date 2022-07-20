@@ -1,0 +1,18 @@
+{% extends 'ProyectoCoderApp/base.html' %}
+{% load static %}
+
+{% block tituloPagina %}
+Editar Perfil 
+{% endblock %}
+   
+{% block contenidoPagina %}
+<h class="display-5 fw-bolder text-green mb-2">Editar Perfil</h>
+<br>
+<h5>Estamos editando al usuario"{{user.username}}":</h5>
+<br>
+<form action = "" method ="post">
+   {% csrf_token %}
+   {{form.as_p}}
+<button type="submit">Guardar cambios</button>
+</form>
+{% endblock %}

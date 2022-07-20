@@ -32,3 +32,4 @@ admin.site.register(Operario,OperarioAdmin)
 admin.site.register(Entregable) # , EntregableAdmin
 
 # admin, admin -> python manage.py createsuperuser
+admin.site.register(Avatar)
