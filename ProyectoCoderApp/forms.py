@@ -53,7 +53,7 @@ class UserEditForm(UserCreationForm):
 
 class AvatarForm(forms.Form):
     
-    # imagen =forms.ImageField(label="imagen")
+    imagen =forms.ImageField(label="imagen")
     
     class Meta:
         model = Avatar

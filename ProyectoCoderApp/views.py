@@ -17,6 +17,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 def inicio(request):
@@ -31,7 +32,7 @@ def inicio(request):
             avatar=Avatar.objects.get(usuario=request.user)
             url = avatar.imagen.url
         except:
-            url="/media/avatar/Profile.png"
+            url="/media/avatar/Profile"
         return render(request,"ProyectoCoderApp/index.html",{"mi_nombre":nombre,"dia_hora":hoy,"notas":notas,"url":url})
 
     return render(request,"ProyectoCoderApp/index.html",{"mi_nombre":nombre,"dia_hora":hoy,"notas":notas,})
@@ -124,7 +125,7 @@ def agregar_avatar(request):
     
     return render(request,"ProyectoCoderApp/agregar_avatar.html",{"form":form})
 
-    
+
     
     
 

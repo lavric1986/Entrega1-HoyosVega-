@@ -1,19 +1,21 @@
 {% extends 'ProyectoCoderApp/base.html' %}
 {% load static %}
 
+
+
+
 {% block tituloPagina %}
-Agregar imagen - Alamacen 
+Crear Avatar- Alamacen 
 {% endblock %}
    
 {% block contenidoPagina %}
-<section class="bg-light py-5">
-   <div class="container px-5">
-   <h1>Avatar</h1>
-   
-
-<form action = "" method ="post" entype="multipart/form-data">
+<h class="display-5 fw-bolder text-green mb-2" enctype="multipart/form-data">Avatar</h>
+<form action = "" method ="post">
    {% csrf_token %}
    {{form.as_p}}
 <button type="submit">Guardar</button>
 </form>
+
+    
+
 {% endblock %}

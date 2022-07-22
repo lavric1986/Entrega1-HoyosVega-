@@ -11,6 +11,9 @@ urlpatterns = [
     path('editar_perfil/', editar_perfil, name="editar_perfil"),
     path('agregar_avatar', agregar_avatar, name="agregar_avatar"),
     
+  
+   
+    
 
     path('herramientas/', herramientas , name= "herramientas"),
     path('crear_herramientas/', crear_herramienta, name="crear_herramientas"),
